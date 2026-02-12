@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicStream</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: white;
+        }
+
+        header {
+            background-color: #1db954;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .card {
+            background-color: #181818;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #1db954;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #17a44b;
+        }
+
+        .player {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #181818;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress {
+            width: 60%;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    🎵 MusicStream
+</header>
+
+<section class="container" id="musicContainer"></section>
+
+<div class="player">
+    <div id="nowPlaying">Selecciona una canción</div>
+    <audio id="audioPlayer" controls class="progress"></audio>
+</div>
+
+<script>
+    const songs = [
+        {
+            title: "Canción 1",
+            artist: "Artista A",
+            cover: "https://picsum.photos/300?1",
+            file: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        },
+        {
+            title: "Canción 2",
+            artist: "Artista B",
+            cover: "https://picsum.photos/300?2",
+            file: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+        },
+        {
+            title: "Canción 3",
+            artist: "Artista C",
+            cover: "https://picsum.photos/300?3",
+            file: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+        }
+    ];
+
+    const container = document.getElementById("musicContainer");
+    const audioPlayer = document.getElementById("audioPlayer");
+    const nowPlaying = document.getElementById("nowPlaying");
+
+    function renderSongs() {
+        songs.forEach(song => {
+            const card = document.createElement("div");
+            card.classList.add("card");
+
+            card.innerHTML = `
+                <img src="${song.cover}" alt="${song.title}">
+                <h3>${song.title}</h3>
+                <p>${song.artist}</p>
+                <button onclick="playSong('${song.file}', '${song.title}')">Reproducir</button>
+            `;
+
+            container.appendChild(card);
+        });
+    }
+
+    function playSong(file, title) {
+        audioPlayer.src = file;
+        audioPlayer.play();
+        nowPlaying.textContent = "Reproduciendo: " + title;
+    }
+
+    renderSongs();
+</script>
+
+</body>
+</html>
